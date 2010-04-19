@@ -1,0 +1,83 @@
+##############################################################
+# FONTUE - THE OPEN SOURCE WEB FONT SERVER 
+##############################################################
+#
+# Fontue is a Rack-based, open-source, 
+# web font server built for Kernest.com
+#
+# For the latest version of this code visit: 
+# http://github.com/garrickvanburen/fontue
+#
+# For more information about Rack: 
+# http://rack.rubyforge.org/
+#
+# Fontue's goals:
+#
+# - Keep @font-face declarations clean, readable, and cross-browswer compatible.
+#
+# - Serve the appropriate font format (otf/ttf, eot, svg, or woff) to browsers supporting @font-face.
+#
+# - Save bandwidth by effectively setting cache headers.
+#
+# - Save bandwidth by not sending fonts to user agents that don't 
+#   support @font-face.
+#
+# - Save bandwidth by not sending fonts to requests that shouldn't 
+#   receive the font (domain checking).
+#
+# - Serve fonts really fast.
+#
+##############################################################
+#
+# FONTUE ASSUMES THE FOLLOWING @font-face { src: } SYNTAX
+#
+# @font-face {
+#	...
+#	src: url('http://woffly.com/font/FONT_FILENAME_WITHOUT_FORMAT'), url('http://woffly.com/font/FONT_FILENAME_WITHOUT_FORMAT#SVG_FONT_ID') format('svg');
+# }
+#
+##############################################################
+#
+# TO INSTALL AND RUN FONTUE
+#
+# 1. Create a directory on your server for your web fonts. And update the font_server_directory variable in line 93. Default is '/fonts'.
+#
+# 2. Upload your web fonts into a directory to your server - say '/fonts' 
+#    - Safari, Chrome, Firefox, and Opera like .otf & .ttf fonts
+#    - Mobile Safari and early versions of Chrome prefer .svg fonts
+#    - Later versions of Firefox also like .woff fonts
+#
+# 3. Upload fontue.ru to your server
+#    Depending on the server you're using, you may also need a config.yml file.
+#
+# 4. Configure your Rack-compliant web server (i.e. Thin, Ebb, Lighttpd, etc) and Run: rackup fontue.ru
+#    Fontue can also be easily adapted for use as an endpoint within Ruby on Rails' Metal.
+#
+# 5. Fontue will now be accepting requests on your server at: /font (change this in line 189)
+#
+##############################################################
+#
+# Copyright (c) 2010 Garrick Van Buren, Working Pathways, Inc.
+#
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation
+# files (the "Software"), to deal in the Software without
+# restriction, including without limitation the rights to use,
+# copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following
+# conditions:
+# 
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+# HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+#
+##############################################################
