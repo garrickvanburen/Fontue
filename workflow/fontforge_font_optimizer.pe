@@ -1,0 +1,76 @@
+#!/usr/bin/fontforge
+
+#########################################################
+# FONTUE FONT OPTIMIZER WORKFLOW - FONTFORGE  v19042010
+#########################################################
+# 
+# This script is part of the Fontue Font Optimizer Workflow
+# package.
+#
+# The goal of this script is to patch the font for Window's 
+# goofy quirks and generate TTFs for use in generating EOT
+# and SVG font files to be served by the Fontue Web Font Server.
+#
+# TO DO: Try Re-writing this in Python, if only to be more
+# readable to more people.
+###########################################################
+
+
+###########################################################
+# 1. Open and patch the font for Microsoft Windows' quirks
+###########################################################
+Print("\nOPENING: " + $1:t)
+Open($1)
+
+
+# 1A. Update name, family name, and 'name for humans' to be the same
+# This is a workaround for a bug in Micrsoft Windows that refuses to load fonts where these names are different
+SetFontNames($fontname, $fontname, $fontname)
+
+# 1B. Update the 'License Description' field to be (an arbitrary) 600 characters long.
+# This is a workaround for a bug in Microsoft Windows bug that refuses to load fonts w/ more than 5k/table
+# TO DO: Find a better solution for this - something that more reliably keeps the license intact. 
+#
+# Short Integer 13	= License Description
+
+if (GetTTFName(0x0409, 13) != '')
+  full_license = GetTTFName(0x0409, 13)
+  if ( Strlen(full_license) > 600 ) 
+		shortened_license = Strsub(full_license, 0, 600)
+		SetTTFName(0x409, 13, shortened_license)
+	endif
+endif
+
+# 1C. Update Hinting for TTFs on Microsoft Windows
+# I've heard hinting is helpful for Windows rendering. 
+#
+# TO DO: Find a better way to do this. 
+# TO DO: What are some other ways we can optimize the letter forms?
+#
+SelectHintingNeeded()
+SetPref("DetectDiagonalStems", 1) 
+AutoHint() 
+PrivateGuess("BlueValues")
+AutoInstr() 
+
+#########################################################
+# 2. GENERATE UPDATED VERSIONS OF THE FONT
+#########################################################
+# IF THE ORIGINAL FONT IS AN OTF, THEN GENERATE AN OTF
+if ( $1:e == "otf" )
+	Generate($1:r + ".otf")
+endif
+
+# GENERATE A TTF FOR USE IN GENERATING EOTS FOR INTERNET EXPLORER 
+# IF YOU HAVE A MICROSOFT WINDOW'S BOX, I RECOMMEND USING RICHARD FINK'S EOTFAST - HTTP://EOTFAST.COM - FOR THE EOT CONVERSION
+Generate($1:r + ".ttf")
+
+# GENERATE AN SVG FOR MOBILE SAFARI, SOME VERSIONS OF CHROME, AND CUFON
+# COMMENTED OUT, WHILE FONTFORGE CAN DO THIS, I RECOMMEND USING BATIK'S TTF2SVG 
+#Generate($1:r + ".svg")
+#
+#
+#########################################################
+# 3. THAT'S IT
+#########################################################
+Quit(0)
