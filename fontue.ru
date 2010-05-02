@@ -157,7 +157,7 @@ fontue = proc do |env|
   etag = Digest::SHA1.hexdigest("#{headers['Last-Modified']}#{headers['Content-Length']}")
     
   # CHECK IF THE FONT NEEDS TO BE SENT. IF SO - SEND IT & CACHE IT ON THE CLIENT FOR 1 YEAR.
-  if (etag = env['HTTP_IF_NONE_MATCH'] || headers['Last-Modified'] == env['HTTP_IF_MODIFIED_SINCE'])
+  if (etag == env['HTTP_IF_NONE_MATCH'] || headers['Last-Modified'] == env['HTTP_IF_MODIFIED_SINCE'])
      status = 304
      headers.delete('Content-Type')
      headers.delete('Content-Length')
