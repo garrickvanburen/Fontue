@@ -26,6 +26,7 @@ Open($1)
 # 1A. Update name, family name, and 'name for humans' to be the same
 # This is a workaround for a bug in Micrsoft Windows that refuses to load fonts where these names are different
 SetFontNames($fontname, $fontname, $fontname)
+SetTTFName(0x409,1, $fontname)
 
 # 1B. UPDATE: The Microsoft Windows bug that caused fonts with tables larger than 2.5K Unicode characters to not be
 # be loaded was remedied with a security fix in January 2010: http://support.microsoft.com/kb/978909/

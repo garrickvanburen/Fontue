@@ -105,7 +105,7 @@ fontue = proc do |env|
   #
   
   # DON'T SERVE FONTS TO UNSUPPORTED BROWSERS
-  supported_browsers = /Chrome\/[3-9]|Firefox\/[3-9].[4-9]|\sMSIE\s[4-9]|Konqueror\/[4-9].[3-9]|Midori|Minefield|Shiretoko|IceCat|Opera\/9.|\sAppleWebKit/
+  supported_browsers = /Chrome\/[3-9]|Firefox\/[3-9]|\sMSIE\s|Konqueror\/[4-9]|Midori|Minefield|Shiretoko|IceCat|Opera\/9.|\sAppleWebKit/
   return [417, {"Content-Type" => "text/html"}, ["Expectation Failed Bad Agent"]] unless env['HTTP_USER_AGENT'].match(supported_browsers)
 
   slug = env["PATH_INFO"].split('/')[1] 
@@ -125,7 +125,7 @@ fontue = proc do |env|
   slug = slug.split("'),%20url('")[0]
        
   # GRAB THE BROWSER APPROPRIATE FORMAT
-  woff_browsers      = /Firefox\/3.[6-9]|Konqueror\/[4-9].[5-9]/
+  woff_browsers      = /Firefox\/[3-9]|Konqueror\/[4-9]/
   eot_browsers       = /\sMSIE\s/
   svg_browsers       = /\s\(iP|Chrome\/3|Presto\/(\d+.)*\d+$/
 
